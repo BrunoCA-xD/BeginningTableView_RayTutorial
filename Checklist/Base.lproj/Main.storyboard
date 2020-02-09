@@ -22,12 +22,13 @@
                     <navigationItem key="navigationItem" title="Checklists" id="7b1-tN-NuB">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="6Ny-gf-7xS">
                             <connections>
-                                <segue destination="It1-jP-2Te" kind="show" id="bOW-xl-9qc"/>
+                                <segue destination="It1-jP-2Te" kind="show" identifier="addItemSegue" id="bOW-xl-9qc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="checklistTableView" destination="dem-CM-eRE" id="SWy-2E-m9u"/>
+                        <segue destination="It1-jP-2Te" kind="show" identifier="editItemSegue" id="GC9-wm-sVn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7gi-m0-AQF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -37,7 +38,7 @@
         <!--Title-->
         <scene sceneID="cyQ-L8-MG5">
             <objects>
-                <tableViewController id="It1-jP-2Te" customClass="AddItemTableViewController" customModule="Checklist" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="It1-jP-2Te" customClass="ItemDetailsTableViewController" customModule="Checklist" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="4nZ-5w-fC6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -83,7 +84,7 @@
                                 <action selector="cancel:" destination="It1-jP-2Te" id="EPU-Jy-qo1"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="0Bb-ho-naY">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="0Bb-ho-naY">
                             <connections>
                                 <action selector="done:" destination="It1-jP-2Te" id="237-Zj-eky"/>
                             </connections>
@@ -118,4 +119,7 @@
             <point key="canvasLocation" x="63.768115942028992" y="150"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="GC9-wm-sVn"/>
+    </inferredMetricsTieBreakers>
 </document>

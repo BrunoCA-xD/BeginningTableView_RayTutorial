@@ -10,22 +10,11 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
     
-    // MARK: - Outlets
-    @IBOutlet var checklistTableView: UITableView!
-    
-    // MARK: - Actions
-    @IBAction func addItem(_ sender: Any) {
-
-        let newRowIndex = todoList.todos.count
-        _ = todoList.newTodo()
-        
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
-        checklistTableView.insertRows(at: [indexPath], with: .automatic)
-        
-
-    }
     // MARK: - Attributes
     var todoList: TodoList
+    
+    // MARK: - Outlets
+    @IBOutlet var checklistTableView: UITableView!
     
     // MARK: - Init's
     required init?(coder: NSCoder) {
@@ -38,10 +27,14 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checklistTableView.register(ChecklistTableViewCell.self)
-
+        
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checklistTableView.reloadData()
+    }
     // MARK: - UITableViewDatasource
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoList.todos.count
@@ -61,7 +54,7 @@ class ChecklistViewController: UITableViewController {
         guard let cell = tableView.cellForRow(at: indexPath) as? ChecklistTableViewCell else { return }
         let item = todoList.todos[indexPath.row]
         configureCheckmark(for: cell, with: item)
-        tableView.deselectRow(at: indexPath, animated: true)
+        checklistTableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -72,17 +65,23 @@ class ChecklistViewController: UITableViewController {
         if editingStyle == .delete {
             todoList.todos.remove(at: indexPath.row)
             let indexPaths = [indexPath]
-            tableView.deleteRows(at: indexPaths, with: .automatic)
+            checklistTableView.deleteRows(at: indexPaths, with: .automatic)
         }
+    }
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        performSegue(withIdentifier: "editItemSegue", sender: indexPath)
+        
     }
     
     
     // MARK: - Helpers
     private func configureCheckmark(for cell: UITableViewCell, with item: ChecklistItem) {
+        guard let checkmark = cell.viewWithTag(1001) as? UILabel else { return }
         if item.checked {
-            cell.accessoryType = .checkmark
+            checkmark.text = "√"
         } else {
-            cell.accessoryType = .none
+            checkmark.text = " "
         }
         item.toggleChecked()
     }
@@ -93,6 +92,40 @@ class ChecklistViewController: UITableViewController {
         }
     }
     
+    // MARK: - Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addItemSegue",
+            let vc = segue.destination as? ItemDetailsTableViewController{
+            vc.delegate = self
+            vc.todoList = todoList
+        } else if segue.identifier == "editItemSegue",
+            let vc = segue.destination as? ItemDetailsTableViewController,
+            let indexPath = sender as? IndexPath{
+            vc.delegate = self
+            vc.itemToEdit = todoList.todos[indexPath.row]
+        }
+    }
 }
-
-
+// MARK: - AddItemViewControllerDelegate
+extension ChecklistViewController: ItemDetailsTableViewControllerDelegate {
+   
+    func itemDetailsTableViewController(_ controller: ItemDetailsTableViewController, didFinishAdding item: ChecklistItem) {
+        navigationController?.popViewController(animated: true)
+        todoList.todos.append(item)
+    }
+    
+    func itemDetailsTableViewController(_ controller: ItemDetailsTableViewController, didFinishEditing item: ChecklistItem) {
+        if let index = todoList.todos.firstIndex(of: item) {
+            let indexPath = IndexPath(row: index, section: 0)
+            guard let cell = checklistTableView.cellForRow(at: indexPath) else { return }
+            configureText(cell, with: item)
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
+    func itemDetailsTableViewControllerDidCancel(_ controller: ItemDetailsTableViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+}

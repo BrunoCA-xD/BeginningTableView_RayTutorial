@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		560B513423EEF524003F9477 /* AddItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560B513323EEF524003F9477 /* AddItemTableViewController.swift */; };
+		560B513423EEF524003F9477 /* ItemDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560B513323EEF524003F9477 /* ItemDetailsTableViewController.swift */; };
 		56808A6123E6FFF400E527A2 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56808A6023E6FFF400E527A2 /* UITableView+Extensions.swift */; };
 		56808A6323E7002B00E527A2 /* NibLoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56808A6223E7002B00E527A2 /* NibLoadableView.swift */; };
 		56808A6623E730B100E527A2 /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56808A6523E730B100E527A2 /* ChecklistItem.swift */; };
@@ -35,7 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		560B513323EEF524003F9477 /* AddItemTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewController.swift; sourceTree = "<group>"; };
+		560B513323EEF524003F9477 /* ItemDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsTableViewController.swift; sourceTree = "<group>"; };
 		56808A6023E6FFF400E527A2 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		56808A6223E7002B00E527A2 /* NibLoadableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadableView.swift; sourceTree = "<group>"; };
 		56808A6523E730B100E527A2 /* ChecklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				56FD47DC23E6FA01009241BB /* ChecklistViewController.swift */,
-				560B513323EEF524003F9477 /* AddItemTableViewController.swift */,
+				560B513323EEF524003F9477 /* ItemDetailsTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -271,7 +271,7 @@
 				56808A6323E7002B00E527A2 /* NibLoadableView.swift in Sources */,
 				56FD47D923E6FA01009241BB /* AppDelegate.swift in Sources */,
 				56808A6123E6FFF400E527A2 /* UITableView+Extensions.swift in Sources */,
-				560B513423EEF524003F9477 /* AddItemTableViewController.swift in Sources */,
+				560B513423EEF524003F9477 /* ItemDetailsTableViewController.swift in Sources */,
 				56FD47FF23E6FE0C009241BB /* Identifiable.swift in Sources */,
 				56FD47DB23E6FA01009241BB /* SceneDelegate.swift in Sources */,
 				56808A6623E730B100E527A2 /* ChecklistItem.swift in Sources */,

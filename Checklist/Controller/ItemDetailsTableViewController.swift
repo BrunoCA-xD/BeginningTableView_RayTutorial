@@ -8,20 +8,41 @@
 
 import UIKit
 
-class AddItemTableViewController: UITableViewController {
+protocol ItemDetailsTableViewControllerDelegate: class {
+    
+    func itemDetailsTableViewControllerDidCancel(_ controller: ItemDetailsTableViewController)
+    func itemDetailsTableViewController(_ controller: ItemDetailsTableViewController, didFinishAdding item: ChecklistItem)
+    func itemDetailsTableViewController(_ controller: ItemDetailsTableViewController, didFinishEditing item: ChecklistItem)
+}
+
+class ItemDetailsTableViewController: UITableViewController {
+    
+    // MARK: - Attributes
+    weak var delegate: ItemDetailsTableViewControllerDelegate?
+    weak var todoList: TodoList?
+    weak var itemToEdit: ChecklistItem?
+    
     
     // MARK: - Outlets
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
+    
     // MARK: - Actions
     @IBAction func done(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        print("\(titleTextField.text)")
+        if let item = itemToEdit,
+            let text = titleTextField.text{
+            item.text = text
+            delegate?.itemDetailsTableViewController(self, didFinishEditing: item)
+        } else {
+            guard let todoText = titleTextField.text else {return}
+            let todo = ChecklistItem(todoText)
+            delegate?.itemDetailsTableViewController(self, didFinishAdding: todo)
+        }
     }
     
     @IBAction func cancel(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        delegate?.itemDetailsTableViewControllerDidCancel(self)
     }
     
     // MARK: - View lifecycles
@@ -29,9 +50,17 @@ class AddItemTableViewController: UITableViewController {
         super.viewDidLoad()
         titleTextField.delegate = self
         navigationItem.largeTitleDisplayMode = .never
-        addBarButton.isEnabled = false
+        
+        
+        if let item = itemToEdit{
+            title = "Edit item"
+            titleTextField.text = item.text
+        }else {
+            title = "Add item"
+            addBarButton.isEnabled = false
+        }
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleTextField.becomeFirstResponder()
@@ -43,7 +72,7 @@ class AddItemTableViewController: UITableViewController {
     }
 }
 // MARK: - UITextFieldDelegate
-extension AddItemTableViewController: UITextFieldDelegate {
+extension ItemDetailsTableViewController: UITextFieldDelegate {
     // This method dismiss the keyboard when the "Done" keyboard button is pressed
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -60,3 +89,4 @@ extension AddItemTableViewController: UITextFieldDelegate {
         return true
     }
 }
+
