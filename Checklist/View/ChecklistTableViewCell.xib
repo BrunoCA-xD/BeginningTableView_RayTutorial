@@ -40,8 +40,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="todoName" destination="w3K-0V-msL" id="CMI-hX-3Hc"/>
-                <outlet property="todoText" destination="w3K-0V-msL" id="4KF-Fe-OWD"/>
+                <outlet property="todoIsDone" destination="Cni-oQ-gZ1" id="R5u-v2-Tc3"/>
+                <outlet property="todoText" destination="w3K-0V-msL" id="iLw-EO-Kg7"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="141.29464285714286"/>
         </tableViewCell>
